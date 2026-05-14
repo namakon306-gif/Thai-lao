@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>THAI-LAO LOTTO PRO</title>
+
+<link rel="manifest" href="manifest.json">
+
+<meta name="theme-color" content="#000000">
+
+<link rel="apple-touch-icon" href="icon-192.png">
+
+<style>
+
+*{
+    box-sizing:border-box;
+    font-family:tahoma,sans-serif;
+}
+
+body{
+    margin:0;
+    background:#000;
+    color:#fff;
+    padding:10px;
+}
+
+.container{
+    width:100%;
+    max-width:700px;
+    margin:auto;
+}
+
+.title{
+    font-size:24px;
+    font-weight:bold;
+    color:#00bfff;
+    margin-bottom:14px;
+    text-align:center;
+}
+
+.card{
+    background:#111;
+    border:2px solid #00bfff;
+    border-radius:20px;
+    padding:14px;
+    margin-bottom:14px;
+    box-shadow:0 0 12px #00bfff33;
+}
+
+.section-title{
+    color:#00bfff;
+    font-size:20px;
+    font-weight:bold;
+    margin-bottom:12px;
+}
+
+.input-box{
+    width:100%;
+    height:58px;
+    border:2px solid #ffc857;
+    border-radius:16px;
+    background:#000;
+    color:#fff;
+    padding:14px;
+    font-size:24px;
+    outline:none;
+    margin-bottom:14px;
+}
+
+textarea{
+    width:100%;
+    height:150px;
+    border:2px solid #00bfff;
+    border-radius:16px;
+    background:#000;
+    color:#fff;
+    padding:14px;
+    font-size:22px;
+    resize:none;
+    outline:none;
+}
+
+.option-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:14px;
+}
+
+.option-row label{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    font-size:17px;
+}
+
+.option-row input{
+    width:20px;
+    height:20px;
+}
+
+.button-row{
+    display:flex;
+    gap:12px;
+    margin-top:14px;
+}
+
+button{
+    flex:1;
+    height:52px;
+    border:none;
+    border-radius:14px;
+    font-size:20px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.show-btn{
+    background:#00bfff;
+    color:#000;
+}
+
+.clear-btn{
+    background:#ff3b3b;
+    color:#fff;
+}
+
+.result-section{
+    margin-bottom:20px;
+}
+
+.result-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:8px;
+}
+
+.result-title{
+    color:#00bfff;
+    font-size:18px;
+    font-weight:bold;
+}
+
+.copy-btn{
+    background:#00bfff;
+    color:#000;
+    border:none;
+    border-radius:8px;
+    padding:6px 12px;
+    font-size:14px;
+    font-weight:bold;
+    cursor:pointer;
+    height:auto;
+    flex:none;
+}
+
+.result-box{
+    background:#fff;
+    color:#000;
+    border:2px solid #00bfff;
+    border-radius:18px;
+    padding:6px;
+    min-height:120px;
+    max-height:500px;
+    overflow:auto;
+    white-space:pre-wrap;
+    line-height:1.5;
+    font-size:18px;
+    word-break:break-word;
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+
+    <div class="title">
+        THAI-LAO LOTTO PRO
+    </div>
+
+    <!-- INPUT -->
+
+    <div class="card">
+
+        <div class="section-title">
+            ป้อนตัวเลขที่ต้องการ
+        </div>
+
+        <input
+            type="text"
+            id="numberInput"
+            class="input-box"
+            placeholder="กรอกตัวเลข..."
+        >
+
+        <div class="option-row">
+
+            <label>
+                <input type="checkbox" id="win2">
+                วิน 2 หลัก
+            </label>
+
+            <label>
+                <input type="checkbox" id="win3">
+                วิน 3 หลัก
+            </label>
+
+            <label>
+                <input type="checkbox" id="win4">
+                วิน 4 หลัก
+            </label>
+
+            <label>
+                <input type="checkbox" id="win6">
+                วิน 6 หลัก
+            </label>
+
+            <label>
+                <input type="checkbox" id="cutDup">
+                ตัดซ้ำ 100%
+            </label>
+
+            <label>
+                <input type="checkbox" id="swapWin">
+                สุ่มสลับตามต้องการ
+            </label>
+
+        </div>
+
+    </div>
+
+    <!-- HISTORY -->
+
+    <div class="card">
+
+        <div class="section-title">
+            ย้อนหลัง 10 งวด
+        </div>
+
+        <textarea
+            id="historyInput"
+            placeholder="เช่น&#10;123&#10;456&#10;789"
+        ></textarea>
+
+        <div class="button-row">
+
+            <button
+                class="show-btn"
+                onclick="toggleAI()"
+                id="aiBtn">
+
+                แสดงผล
+
+            </button>
+
+            <button
+                class="clear-btn"
+                onclick="clearHistory()">
+
+                ล้าง
+
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- RESULT -->
+
+    <div class="card">
+
+        <div class="section-title">
+            สรุปการวิเคราะห์
+        </div>
+
+        <div id="result">
+
+            <div class="result-box">
+แสดงผล...
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+loadHistory();
+
+let aiMode = false;
+
+// =======================
+// EVENTS
+// =======================
+
+[
+"numberInput",
+"win2",
+"win3",
+"win4",
+"win6",
+"cutDup",
+"swapWin"
+].forEach(id=>{
+
+    document
+    .getElementById(id)
+    .addEventListener(
+        id==="numberInput"
+        ? "input"
+        : "change",
+        generateResult
+    );
+
+});
+
+// =======================
+// เปิด/ปิด AI
+// =======================
+
+function toggleAI(){
+
+    aiMode = !aiMode;
+
+    if(aiMode){
+
+        generateAI();
+
+        document
+        .getElementById("aiBtn")
+        .innerText = "ปิดผล";
+
+    }else{
+
+        document
+        .getElementById("aiBtn")
+        .innerText = "แสดงผล";
+
+        generateResult();
+
+    }
+
+}
+
+// =======================
+// PERMUTATION
+// =======================
+
+function generateAllPermutations(str){
+
+    let result = [];
+
+    function permute(arr,m=[]){
+
+        if(arr.length===0){
+
+            result.push(m.join(''));
+
+        }else{
+
+            for(let i=0;i<arr.length;i++){
+
+                let curr = arr.slice();
+
+                let next =
+                curr.splice(i,1);
+
+                permute(
+                    curr,
+                    m.concat(next)
+                );
+
+            }
+
+        }
+
+    }
+
+    permute(str.split(''));
+
+    return [...new Set(result)];
+
+}
+
+// =======================
+// COMBINATION
+// =======================
+
+function generateCombination(arr,size){
+
+    let result = [];
+
+    function combine(start,temp){
+
+        if(temp.length===size){
+
+            result.push([...temp]);
+
+            return;
+
+        }
+
+        for(let i=start;i<arr.length;i++){
+
+            temp.push(arr[i]);
+
+            combine(i+1,temp);
+
+            temp.pop();
+
+        }
+
+    }
+
+    combine(0,[]);
+
+    return result;
+
+}
+
+// =======================
+// ตัดซ้ำแนว
+// =======================
+
+function removeDuplicateWin(data){
+
+    let unique = [];
+
+    let used = new Set();
+
+    data.forEach(num=>{
+
+        let key =
+        num
+        .split('')
+        .sort()
+        .join('');
+
+        if(!used.has(key)){
+
+            used.add(key);
+
+            unique.push(num);
+
+        }
+
+    });
+
+    return unique;
+
+}
+
+// =======================
+// สุ่มสลับ
+// =======================
+
+function shuffleNumber(num){
+
+    let arr = num.split('');
+
+    for(let i=arr.length-1;i>0;i--){
+
+        let j =
+        Math.floor(
+            Math.random()*(i+1)
+        );
+
+        [arr[i],arr[j]] =
+        [arr[j],arr[i]];
+
+    }
+
+    return arr.join('');
+
+}
+
+// =======================
+// COPY
+// =======================
+
+function copyText(text){
+
+    navigator
+    .clipboard
+    .writeText(text);
+
+    alert("คัดลอกแล้ว");
+
+}
+
+// =======================
+// GENERATE WIN
+// =======================
+
+function generateWin(input,size){
+
+    let combos =
+    generateCombination(
+        input.split(''),
+        size
+    );
+
+    let result = [];
+
+    combos.forEach(set=>{
+
+        let perms =
+        generateAllPermutations(
+            set.join('')
+        );
+
+        result.push(...perms);
+
+    });
+
+    result = [...new Set(result)];
+
+    return result;
+
+}
+
+// =======================
+// CREATE SECTION
+// =======================
+
+function createSection(title,data){
+
+    let text =
+    data.join(', ');
+
+    return `
+
+    <div class="result-section">
+
+        <div class="result-header">
+
+            <div class="result-title">
+                ${title} (${data.length})
+            </div>
+
+            <button
+                class="copy-btn"
+                onclick="copyText(\`${text}\`)">
+
+                คัดลอก
+
+            </button>
+
+        </div>
+
+        <div class="result-box">${text}</div>
+
+    </div>
+
+    `;
+
+}
+
+// =======================
+// REALTIME RESULT
+// =======================
+
+function generateResult(){
+
+    if(aiMode){
+        return;
+    }
+
+    const input =
+    document
+    .getElementById("numberInput")
+    .value
+    .replace(/[^0-9]/g,'');
+
+    const win2 =
+    document
+    .getElementById("win2")
+    .checked;
+
+    const win3 =
+    document
+    .getElementById("win3")
+    .checked;
+
+    const win4 =
+    document
+    .getElementById("win4")
+    .checked;
+
+    const win6 =
+    document
+    .getElementById("win6")
+    .checked;
+
+    const cutDup =
+    document
+    .getElementById("cutDup")
+    .checked;
+
+    const swapWin =
+    document
+    .getElementById("swapWin")
+    .checked;
+
+    let html = "";
+
+    function processWin(size,title){
+
+        let result =
+        generateWin(input,size);
+
+        if(cutDup){
+
+            result =
+            removeDuplicateWin(result);
+
+        }
+
+        if(swapWin){
+
+            result =
+            result.map(v=>
+                shuffleNumber(v)
+            );
+
+        }
+
+        html +=
+        createSection(
+            title,
+            result
+        );
+
+    }
+
+    if(input.length>=2 && win2){
+
+        processWin(2,"วิน 2");
+
+    }
+
+    if(input.length>=3 && win3){
+
+        processWin(3,"วิน 3");
+
+    }
+
+    if(input.length>=4 && win4){
+
+        processWin(4,"วิน 4");
+
+    }
+
+    if(input.length>=6 && win6){
+
+        processWin(6,"วิน 6");
+
+    }
+
+    if(html===""){
+
+        html = `
+        <div class="result-box">
+แสดงผล...
+        </div>
+        `;
+
+    }
+
+    document
+    .getElementById("result")
+    .innerHTML = html;
+
+}
+
+// =======================
+// AI ANALYSIS
+// =======================
+
+function generateAI(){
+
+    const historyText =
+    document
+    .getElementById("historyInput")
+    .value
+    .trim();
+
+    let html = "";
+
+    if(historyText){
+
+        const lines =
+        historyText
+        .split('\n')
+        .map(v=>v.trim())
+        .filter(v=>v);
+
+        if(lines.length !== 10){
+
+            document
+            .getElementById("result")
+            .innerHTML = `
+            <div class="result-box">
+กรุณาป้อนย้อนหลังให้ครบ 10 ชุด
+            </div>
+            `;
+
+            return;
+
+        }
+
+        let count = {};
+
+        lines.forEach(num=>{
+
+            num.split('').forEach(d=>{
+
+                if(!count[d]){
+
+                    count[d]=0;
+
+                }
+
+                count[d]++;
+
+            });
+
+        });
+
+        let sorted =
+        Object.entries(count)
+        .sort((a,b)=>b[1]-a[1]);
+
+        let hot =
+        sorted
+        .slice(0,4)
+        .map(v=>v[0]);
+
+        let cold =
+        sorted
+        .slice(-3)
+        .map(v=>v[0]);
+
+        let pos1Count = {};
+        let pos2Count = {};
+        let pos3Count = {};
+
+        lines.forEach(num=>{
+
+            if(num.length>=3){
+
+                let a = num[0];
+                let b = num[1];
+                let c = num[2];
+
+                pos1Count[a] =
+                (pos1Count[a] || 0) + 1;
+
+                pos2Count[b] =
+                (pos2Count[b] || 0) + 1;
+
+                pos3Count[c] =
+                (pos3Count[c] || 0) + 1;
+
+            }
+
+        });
+
+        let pos1 =
+        Object.entries(pos1Count)
+        .sort((a,b)=>b[1]-a[1])
+        .slice(0,3)
+        .map(v=>v[0]);
+
+        let pos2 =
+        Object.entries(pos2Count)
+        .sort((a,b)=>b[1]-a[1])
+        .slice(0,3)
+        .map(v=>v[0]);
+
+        let pos3 =
+        Object.entries(pos3Count)
+        .sort((a,b)=>b[1]-a[1])
+        .slice(0,3)
+        .map(v=>v[0]);
+
+        let used =
+        new Set([
+            ...pos1,
+            ...pos2,
+            ...pos3
+        ]);
+
+        let missing = [];
+
+        for(let i=0;i<=9;i++){
+
+            if(!used.has(i.toString())){
+
+                missing.push(i);
+
+            }
+
+        }
+
+        html = `
+
+        <div class="result-section">
+
+            <div class="result-box">
+
+🔥 HOT
+${hot.join('')}
+
+❄️ COLD
+${cold.join('')}
+
+📌 POSITION
+
+A ${pos1.join('')}
+B ${pos2.join('')}
+C ${pos3.join('')}
+
+NOT ${missing.join('') || '-'}
+
+            </div>
+
+        </div>
+
+        `;
+
+    }else{
+
+        html = `
+        <div class="result-box">
+ไม่มีข้อมูลย้อนหลัง
+        </div>
+        `;
+
+    }
+
+    document
+    .getElementById("result")
+    .innerHTML = html;
+
+    saveHistory();
+
+}
+
+// =======================
+// SAVE
+// =======================
+
+function saveHistory(){
+
+    const data =
+    document
+    .getElementById("historyInput")
+    .value
+    .trim();
+
+    let history =
+    data
+    .split('\n')
+    .map(v=>v.trim())
+    .filter(v=>v);
+
+    history = history.slice(-10);
+
+    localStorage.setItem(
+        "thaiLottoHistory",
+        JSON.stringify(history)
+    );
+
+}
+
+// =======================
+// LOAD
+// =======================
+
+function loadHistory(){
+
+    let history =
+    JSON.parse(
+        localStorage.getItem(
+            "thaiLottoHistory"
+        )
+    ) || [];
+
+    document
+    .getElementById("historyInput")
+    .value =
+    history.join('\n');
+
+}
+
+// =======================
+// CLEAR
+// =======================
+
+function clearHistory(){
+
+    localStorage.removeItem(
+        "thaiLottoHistory"
+    );
+
+    document
+    .getElementById("historyInput")
+    .value = "";
+
+    aiMode = false;
+
+    document
+    .getElementById("aiBtn")
+    .innerText = "แสดงผล";
+
+    generateResult();
+
+}
+
+generateResult();
+
+</script>
+
+<script>
+
+if("serviceWorker" in navigator){
+
+    navigator.serviceWorker
+    .register("./service-worker.js");
+
+}
+
+</script>
+
+</body>
+</html>
